@@ -9,7 +9,7 @@ const ToDoCard = (props) => {
     const [description, setDescription] = useState(toDo.descrption);
     const [isEditing, setIsEditing] = useState(false);
 
-
+    //implement handlers 
     const handleSetToDoComplete = () => {}
     const handleDeleteToDo = () => {}
     const handleUpdateToDo = () => {}
