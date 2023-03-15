@@ -1,16 +1,21 @@
 import axios from 'axios';
 import { useState } from 'react';
+import { useNavigate  } from 'react-router-dom';
 
 
 
 const ToDoFormPage = (props) => {
 
+	const { endpointUrl } = props;
     const [title, setTitle] = useState("")
 	const [description, setDescription] = useState("")
 	const [priority, setPriority] = useState("")
 
+	//instantiate navigator 
+	const navigate = useNavigate();
+
     const handleCreateToDo = async () => {
-        axios.post('/urlendpoint', {
+        axios.post(`${endpointUrl}`, {
             title: title,
             description: description,
             priority: priority
@@ -48,7 +53,7 @@ const ToDoFormPage = (props) => {
 			<br/>
 			<button onClick={()=>{
 				handleCreateToDo()
-				//navigate("/")
+				navigate("/")
 			}}>Create ToDo</button>
 		</div>
 	)

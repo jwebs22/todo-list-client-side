@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import HomePage from './Pages/HomePage';
 import ToDoFormPage from './Pages/ToDoFormPage';
+import Layout from './Layouts/Layout';
 import axios from 'axios';
 
 const urlEndPoint = process.env.REACT_APP_URL_ENDPOINT;
@@ -31,10 +32,29 @@ function App() {
   
   },[])
 
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <Layout />,
+      children: [
+        {
+          index: true,
+          element: <HomePage toDoList={toDoList}/>
+
+        },
+        { 
+          path: "todo-form",
+          element: <ToDoFormPage urlEndPoint={urlEndPoint}/>
+        }
+      ]
+
+    }
+  ])
+
 
   return (
-    <div className="App">
-      <HomePage toDoList={toDoList} />
+    <div className="App-header">
+      <RouterProvider router={router} />
     </div>
   );
 }
