@@ -6,7 +6,7 @@ import { useNavigate  } from 'react-router-dom';
 
 const ToDoFormPage = (props) => {
 
-	const { endpointUrl } = props;
+	const { setShouldRefresh, urlEndPoint } = props;
     const [title, setTitle] = useState("")
 	const [description, setDescription] = useState("")
 	const [priority, setPriority] = useState("")
@@ -15,17 +15,28 @@ const ToDoFormPage = (props) => {
 	const navigate = useNavigate();
 
     const handleCreateToDo = async () => {
-        axios.post(`${endpointUrl}`, {
+
+		//if we are creating a new entry, let's refresh the page
+		setShouldRefresh(true)
+
+		console.log(urlEndPoint)
+		const req =  {
             title: title,
             description: description,
             priority: priority
-          })
+          }
+		console.log(req);
+        axios.post(`${urlEndPoint}/todos/create-one`, req)
           .then(function (response) {
             console.log(response);
-          })
+          },{
+			'Content-Type': 'application/x-www-form-urlencoded'
+		  })
           .catch(function (error) {
             console.log(error);
-          });
+          }); 
+
+		  setShouldRefresh(false);
     }
 
 

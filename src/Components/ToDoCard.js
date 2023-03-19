@@ -1,18 +1,52 @@
 import { useState } from "react";
-
+import axios from 'axios';
 // todo card 
 const ToDoCard = (props) => {
 
-    const { toDo  } = props;
+    const { toDo, urlEndPoint, setShouldRefresh } = props;
     const [title, setTitle] = useState(toDo.title);
     const [priority, setPriority] = useState(toDo.priority);
     const [description, setDescription] = useState(toDo.descrption);
     const [isEditing, setIsEditing] = useState(false);
 
     //implement handlers 
-    const handleSetToDoComplete = () => {}
-    const handleDeleteToDo = () => {}
-    const handleUpdateToDo = () => {}
+    const handleSetToDoComplete = async () => {
+      setShouldRefresh(true);
+      const req = {
+        isComplete: !toDo.isComplete
+      } 
+      const response = axios.put(`${urlEndPoint}/todos/update-one/${toDo.id}`, req)
+      .then(function (response) {
+        console.log(response);
+      },{
+      'Content-Type': 'application/json'
+      })
+      setShouldRefresh(false);
+    }
+    const handleDeleteToDo = () => {
+      const response = axios.delete(`${urlEndPoint}/todos/delete-one/${toDo.id}`)
+      .then(function (response) {
+        console.log(response);
+      },{
+      'Content-Type': 'application/json'
+      })
+
+    }
+    const handleUpdateToDo = () => {
+      setShouldRefresh(true);
+      const req = {
+        title: title,
+        description: description,
+        priority: priority
+      } 
+      const response = axios.put(`${urlEndPoint}/todos/update-one/${toDo.id}`, req)
+      .then(function (response) {
+        console.log(response);
+      },{
+      'Content-Type': 'application/json'
+      })
+      setShouldRefresh(false);
+    }
 
     return (
         <div>

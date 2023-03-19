@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 
 import { useState, useEffect } from 'react';
@@ -14,6 +13,7 @@ function App() {
 
   //set up hooks for the state 
   const [toDoList, setToDoList] = useState([]);
+  const [shouldRefresh, setShouldRefresh] = useState(false);
 
 
   //load the todo items from the back end 
@@ -39,12 +39,16 @@ function App() {
       children: [
         {
           index: true,
-          element: <HomePage toDoList={toDoList}/>
+          element: <HomePage 
+            toDoList={toDoList} 
+            urlEndPoint={urlEndPoint} 
+            setShouldRefresh={setShouldRefresh}
+          />
 
         },
         { 
           path: "todo-form",
-          element: <ToDoFormPage urlEndPoint={urlEndPoint}/>
+          element: <ToDoFormPage urlEndPoint={urlEndPoint} setShouldRefresh={setShouldRefresh}/>
         }
       ]
 
